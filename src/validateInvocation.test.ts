@@ -32,6 +32,8 @@ it('auth error', async () => {
     instanceConfig: {
       clientId: 'INVALID',
       clientSecret: 'INVALID',
+      clientUsername: 'INVALID',
+      clientPassword: 'INVALID',
     },
   });
 
