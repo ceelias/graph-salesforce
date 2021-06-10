@@ -1,48 +1,69 @@
-// import { createMockStepExecutionContext } from '@jupiterone/integration-sdk-testing';
+import {
+  createMockStepExecutionContext,
+  Recording,
+  setupRecording,
+} from '@jupiterone/integration-sdk-testing';
 
-// import { IntegrationConfig } from '../config';
-// import { fetchUsers } from './user';
-// import { integrationConfig } from '../../test/config';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
 
-test('should collect data', async () => {
-  // const context = createMockStepExecutionContext<IntegrationConfig>({
-  //   instanceConfig: integrationConfig,
-  // });
-  console.log('Passing the tests for now');
-  await Promise.resolve(true);
-  // Simulates dependency graph execution.
-  // See https://github.com/JupiterOne/sdk/issues/262.
-  //await fetchUsers(context);
+import { fetchUsers } from './user';
 
-  // Review snapshot, failure is a regression
-  // expect({
-  //   numCollectedEntities: context.jobState.collectedEntities.length,
-  //   numCollectedRelationships: context.jobState.collectedRelationships.length,
-  //   collectedEntities: context.jobState.collectedEntities,
-  //   collectedRelationships: context.jobState.collectedRelationships,
-  //   encounteredTypes: context.jobState.encounteredTypes,
-  // }).toMatchSnapshot();
+if (process.env.LOAD_ENV) {
+  dotenv.config({
+    path: path.join(__dirname, '../../.env'),
+  });
+}
 
-  // TODO This currently fails due to a date object. Will mock up data once
-  // I figure out what we are going to ingest.
-  // const users = context.jobState.collectedEntities.filter((e) =>
-  //   e._class.includes('User'),
-  // );
-  // expect(users.length).toBeGreaterThan(0);
-  // users.forEach;
-  // expect(users).toMatchGraphObjectSchema({
-  //   _class: ['User'],
-  //   schema: {
-  //     additionalProperties: false,
-  //     properties: {
-  //       _type: { const: 'salesforce_user' },
-  //       username: { type: 'string' },
-  //       _rawData: {
-  //         type: 'array',
-  //         items: { type: 'object' },
-  //       },
-  //     },
-  //     required: ['username'],
-  //   },
-  // });
+describe('#fetchUsers', () => {
+  let recording: Recording;
+
+  afterEach(async () => {
+    await recording.stop();
+  });
+
+  test('should collect data', async () => {
+    recording = setupRecording({
+      directory: __dirname,
+      name: 'fetchUsersShouldCollectData',
+      options: {
+        matchRequestsBy: {
+          url: {
+            hostname: false,
+          },
+        },
+      },
+    });
+
+    const context = createMockStepExecutionContext({
+      instanceConfig: {
+        clientId: process.env.CLIENT_ID || 'dummy-client-id',
+        clientSecret: process.env.CLIENT_SECRET || 'dummy-client-secret',
+        clientUsername: process.env.CLIENT_USERNAME || 'dummy-client-username',
+        clientPassword: process.env.CLIENT_PASSWORD || 'dummy-client-password',
+      },
+    });
+    await fetchUsers(context);
+
+    expect(context.jobState.collectedEntities).toHaveLength(7);
+    expect(context.jobState.collectedRelationships).toHaveLength(0);
+    expect(context.jobState.collectedEntities).toMatchGraphObjectSchema({
+      _class: ['User'],
+      schema: {
+        additionalProperties: true,
+        properties: {
+          _type: { const: 'salesforce_user' },
+          _key: { type: 'string' },
+          username: { type: 'string' },
+          shortLoginId: { type: 'string' },
+          name: { type: 'string' },
+          _rawData: {
+            type: 'array',
+            items: { type: 'object' },
+          },
+        },
+        required: [],
+      },
+    });
+  });
 });
