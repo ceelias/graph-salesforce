@@ -1,19 +1,13 @@
+import { createMockStepExecutionContext } from '@jupiterone/integration-sdk-testing';
+
 import {
-  createMockStepExecutionContext,
   Recording,
-  setupRecording,
-} from '@jupiterone/integration-sdk-testing';
+  setupSalesforceRecording,
+} from '../../../test/helpers/recording';
 
-import * as dotenv from 'dotenv';
-import * as path from 'path';
+import { integrationConfig } from '../../../test/config';
 
-import { fetchUsers } from './user';
-
-if (process.env.LOAD_ENV) {
-  dotenv.config({
-    path: path.join(__dirname, '../../.env'),
-  });
-}
+import { fetchUsers } from '.';
 
 describe('#fetchUsers', () => {
   let recording: Recording;
@@ -23,7 +17,7 @@ describe('#fetchUsers', () => {
   });
 
   test('should collect data', async () => {
-    recording = setupRecording({
+    recording = setupSalesforceRecording({
       directory: __dirname,
       name: 'fetchUsersShouldCollectData',
       options: {
@@ -32,16 +26,12 @@ describe('#fetchUsers', () => {
             hostname: false,
           },
         },
+        recordFailedRequests: true,
       },
     });
 
     const context = createMockStepExecutionContext({
-      instanceConfig: {
-        clientId: process.env.CLIENT_ID || 'dummy-client-id',
-        clientSecret: process.env.CLIENT_SECRET || 'dummy-client-secret',
-        clientUsername: process.env.CLIENT_USERNAME || 'dummy-client-username',
-        clientPassword: process.env.CLIENT_PASSWORD || 'dummy-client-password',
-      },
+      instanceConfig: integrationConfig,
     });
     await fetchUsers(context);
 

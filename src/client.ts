@@ -1,4 +1,4 @@
-import { Connection, StandardSchema } from 'jsforce';
+import { Connection, StandardSchema, OAuth2 } from 'jsforce';
 
 import { IntegrationProviderAuthenticationError } from '@jupiterone/integration-sdk-core';
 
@@ -25,35 +25,33 @@ export class APIClient {
    * Set up the connection to Salesforce with oauth info
    */
   setUpClient(): void {
+    var oauth2 = new OAuth2({
+      clientId: this.config.clientId,
+      clientSecret: this.config.clientSecret,
+      redirectUri: 'https://login.salesforce.com/services/oauth2/success',
+    });
     this.conn = new Connection<StandardSchema>({
-      oauth2: {
-        // Default loginUrl points to "https://login.salesforce.com"
-        // you can change loginUrl to connect to sandbox or prerelease env.
-        // loginUrl : 'https://test.salesforce.com',
-        clientId: this.config.clientId,
-        clientSecret: this.config.clientSecret,
-        redirectUri: 'https://login.salesforce.com/services/oauth2/success', // TODO: May want to add this to config
-      },
+      oauth2: oauth2,
+      instanceUrl: this.config.instanceUrl,
+      accessToken: this.config.accessToken,
+      refreshToken: this.config.refreshToken,
     });
   }
 
   public async verifyAuthentication(): Promise<void> {
-    // TODO: Fix the error messages here
     try {
-      await this.conn.login(
-        this.config.clientUsername,
-        this.config.clientPassword,
-      );
+      // TODO: Add a wrapper around the authorize call to get token on initial integration:
+      // await this.conn.authorize(code);
+      await this.conn.sobject('User').describe();
     } catch (err) {
       // There is a serious issue authenticating with API
       throw new IntegrationProviderAuthenticationError({
         cause: err,
-        endpoint: 'https://login.salesforce.com',
-        status: '',
-        statusText: '',
+        endpoint: this.conn.loginUrl,
+        status: err.name,
+        statusText: err.message,
       });
     }
-    await this.conn.logout();
   }
 
   /**
@@ -64,11 +62,7 @@ export class APIClient {
   public async iterateUsers(
     iteratee: ResourceIteratee<StandardSchema['SObjects']['User']['Fields']>,
   ): Promise<void> {
-    await this.conn.login(
-      this.config.clientUsername,
-      this.config.clientPassword,
-    );
-    const users = await this.conn.sobject('User').find();
+    const users = await this.conn.sobject('User').find().autoFetch(true); //autofetch will automatically handle pagination
 
     for (const user of users) {
       await iteratee(user);

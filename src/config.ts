@@ -21,12 +21,16 @@ import { createAPIClient } from './client';
  * `instance.config` in a UI.
  */
 export const instanceConfigFields: IntegrationInstanceConfigFieldMap = {
-  clientUsername: {
-    type: 'string',
-  },
-  clientPassword: {
+  accessToken: {
     type: 'string',
     mask: true,
+  },
+  refreshToken: {
+    type: 'string',
+    mask: true,
+  },
+  instanceUrl: {
+    type: 'string',
   },
   clientId: {
     type: 'string',
@@ -43,22 +47,27 @@ export const instanceConfigFields: IntegrationInstanceConfigFieldMap = {
  */
 export interface IntegrationConfig extends IntegrationInstanceConfig {
   /**
-   * The provider API client username used to authenticate requests.
+   * The provider API client access token used to authenticate requests.
    */
-  clientUsername: string;
+  accessToken: string;
 
   /**
-   * The provider API client password used to authenticate requests.
+   * The provider API instance URL
    */
-  clientPassword: string;
+  instanceUrl: string;
 
   /**
-   * The provider API client username used to authenticate requests.
+   * The provider API client refresh token used to get new token if needed
+   */
+  refreshToken: string;
+
+  /**
+   * The provider API client id
    */
   clientId: string;
 
   /**
-   * The provider API client password used to authenticate requests.
+   * The provider API client secret
    */
   clientSecret: string;
 }
@@ -69,13 +78,15 @@ export async function validateInvocation(
   const { config } = context.instance;
 
   if (
-    !config.clientUsername ||
-    !config.clientPassword ||
+    !config.accessToken ||
+    !config.instanceUrl ||
+    !config.refreshToken ||
     !config.clientId ||
     !config.clientSecret
   ) {
+    //TODO handle this better for actual deployment
     throw new IntegrationValidationError(
-      'Config requires all of {clientUsername, clientPassword, clientId, clientSecret}',
+      'Config requires all of {accessToken, instanceUrl}',
     );
   }
 
