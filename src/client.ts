@@ -25,7 +25,7 @@ export class APIClient {
    * Set up the connection to Salesforce with oauth info
    */
   setUpClient(): void {
-    var oauth2 = new OAuth2({
+    const oauth2 = new OAuth2({
       clientId: this.config.clientId,
       clientSecret: this.config.clientSecret,
       redirectUri: 'https://login.salesforce.com/services/oauth2/success',
