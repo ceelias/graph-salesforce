@@ -34,6 +34,6 @@
     "@jupiterone/integration-sdk-testing": "^6.0.0"
   },
   "dependencies": {
-    "jsforce": "^2.0.0-beta.3"
+    "jsforce": "^2.0.0-beta.5"
   }
 }
