@@ -30,6 +30,9 @@ it('auth error', async () => {
 
   const executionContext = createMockExecutionContext({
     instanceConfig: {
+      accessToken: 'INVALID',
+      instanceUrl: 'https://www.invalid-dummy-url.com',
+      refreshToken: 'INVALID',
       clientId: 'INVALID',
       clientSecret: 'INVALID',
     },
