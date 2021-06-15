@@ -12,6 +12,7 @@ export { Recording };
 export const salesforceMutations = {
   ...mutations,
   mutateAccessToken,
+  mutateSignature,
 };
 
 export function setupSalesforceRecording(
@@ -20,13 +21,13 @@ export function setupSalesforceRecording(
   return setupRecording({
     mutateEntry: mutateRecordingEntry,
     ...input,
-    // recordFailedRequests: true,
   });
 }
 
 function mutateRecordingEntry(entry: RecordingEntry): void {
   salesforceMutations.unzipGzippedRecordingEntry(entry);
   salesforceMutations.mutateAccessToken(entry, () => '[REDACTED]');
+  salesforceMutations.mutateSignature(entry, () => '[REDACTED]');
 }
 
 function mutateAccessToken(
@@ -56,6 +57,32 @@ function mutateAccessToken(
           0,
         );
       }
+    }
+  }
+}
+
+function mutateSignature(
+  entry: RecordingEntry,
+  mutation: (signature: string) => string,
+) {
+  const responseText = entry.response.content.text;
+  if (!responseText) {
+    return;
+  }
+
+  if (isJson(responseText)) {
+    const responseJson = JSON.parse(responseText);
+
+    // Redact signature
+    if (responseJson.signature) {
+      entry.response.content.text = JSON.stringify(
+        {
+          ...responseJson,
+          signature: mutation(responseJson.signature),
+        },
+        null,
+        0,
+      );
     }
   }
 }
