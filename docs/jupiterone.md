@@ -96,9 +96,18 @@ https://github.com/JupiterOne/sdk/blob/master/docs/integrations/development.md
 
 The following entities are created:
 
-| Resources | Entity `_type`    | Entity `_class` |
-| --------- | ----------------- | --------------- |
-| User      | `salesforce_user` | `User`          |
+| Resources | Entity `_type`         | Entity `_class` |
+| --------- | ---------------------- | --------------- |
+| User      | `salesforce_user`      | `User`          |
+| UserRole  | `salesforce_user_role` | `AccessRole`    |
+
+### Relationships
+
+The following relationships are created/mapped:
+
+| Source Entity `_type` | Relationship `_class` | Target Entity `_type`  |
+| --------------------- | --------------------- | ---------------------- |
+| `salesforce_user`     | **HAS**               | `salesforce_user_role` |
 
 <!--
 ********************************************************************************

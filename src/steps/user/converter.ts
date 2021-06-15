@@ -25,6 +25,7 @@ export function createUserEntity(
         name: user.Name, //required property in J1 User
         // TODO: currently the emails are failing to fit the format (some are missing .com)
         // email: user.Email,
+        roleId: user.UserRoleId,
         shortLoginId: user.CommunityNickname,
         // TODO: Include more attributes that are deemed valuable
       },

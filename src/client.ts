@@ -68,6 +68,26 @@ export class APIClient {
       await iteratee(user);
     }
   }
+
+  /**
+   * Iterates each user role resource in the provider.
+   *
+   * @param iteratee receives each resource to produce entities/relationships
+   */
+  public async iterateUserRoles(
+    iteratee: ResourceIteratee<
+      StandardSchema['SObjects']['UserRole']['Fields']
+    >,
+  ): Promise<void> {
+    const userRoles = await this.conn
+      .sobject('UserRole')
+      .find()
+      .autoFetch(true); //autofetch will automatically handle pagination
+
+    for (const role of userRoles) {
+      await iteratee(role);
+    }
+  }
 }
 
 export function createAPIClient(config: IntegrationConfig): APIClient {
