@@ -2,7 +2,6 @@ import {
   IntegrationStep,
   IntegrationStepExecutionContext,
   createDirectRelationship,
-  RelationshipClass,
 } from '@jupiterone/integration-sdk-core';
 
 import { createAPIClient } from '../../client';
@@ -28,7 +27,7 @@ export async function fetchUsers({
       if (userRoleEntity) {
         await jobState.addRelationship(
           createDirectRelationship({
-            _class: RelationshipClass.HAS,
+            _class: Relationships.USER_HAS_ROLE._class,
             from: userEntity,
             to: userRoleEntity,
             properties: {
@@ -47,7 +46,7 @@ export const userSteps: IntegrationStep<IntegrationConfig>[] = [
     name: 'Fetch User Details',
     entities: [Entities.USER],
     relationships: [Relationships.USER_HAS_ROLE],
-    dependsOn: [],
+    dependsOn: [Steps.USER_ROLES],
     executionHandler: fetchUsers,
   },
 ];
