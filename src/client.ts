@@ -88,6 +88,46 @@ export class APIClient {
       await iteratee(role);
     }
   }
+
+  /**
+   * Iterates each permission set resource in the provider.
+   *
+   * @param iteratee receives each resource to produce entities/relationships
+   */
+  public async iteratePermissionSets(
+    iteratee: ResourceIteratee<
+      StandardSchema['SObjects']['PermissionSet']['Fields']
+    >,
+  ): Promise<void> {
+    const permSets = await this.conn
+      .sobject('PermissionSet')
+      .find()
+      .autoFetch(true);
+
+    for (const set of permSets) {
+      await iteratee(set);
+    }
+  }
+
+  /**
+   * Iterates each permission set assignment resource in the provider.
+   *
+   * @param iteratee receives each resource to produce entities/relationships
+   */
+  public async iteratePermissionSetAssignments(
+    iteratee: ResourceIteratee<
+      StandardSchema['SObjects']['PermissionSetAssignment']['Fields']
+    >,
+  ): Promise<void> {
+    const permAssignments = await this.conn
+      .sobject('PermissionSetAssignment')
+      .find()
+      .autoFetch(true); //autofetch will automatically handle pagination
+
+    for (const assignment of permAssignments) {
+      await iteratee(assignment);
+    }
+  }
 }
 
 export function createAPIClient(config: IntegrationConfig): APIClient {
