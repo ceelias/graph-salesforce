@@ -1,7 +1,7 @@
 import { createPermissionSetEntity } from './converter';
 import { StandardSchema } from 'jsforce';
 
-describe('#createUserRoleEntity', () => {
+describe('#createPermissionSetEntity', () => {
   test('should convert to entity', () => {
     const permSet = {
       Id: 'permSet1',

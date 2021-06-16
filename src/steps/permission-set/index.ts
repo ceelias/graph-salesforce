@@ -9,7 +9,7 @@ import { IntegrationConfig } from '../../config';
 import { Entities, Steps, Relationships } from '../constants';
 import {
   createPermissionSetEntity,
-  createPermissionEntityIdentifier,
+  createPermissionSetEntityIdentifier,
 } from './converter';
 import { createUserEntityIdentifier } from '../user/converter';
 
@@ -33,7 +33,7 @@ export async function buildUserPermissionSetRelationships({
   await apiClient.iteratePermissionSetAssignments(async (assignment) => {
     if (assignment.PermissionSetId) {
       const userEntityId = createUserEntityIdentifier(assignment.AssigneeId);
-      const permEntityId = createPermissionEntityIdentifier(
+      const permEntityId = createPermissionSetEntityIdentifier(
         assignment.PermissionSetId,
       );
       const userEntity = await jobState.findEntity(userEntityId);
@@ -55,7 +55,7 @@ export async function buildUserPermissionSetRelationships({
   });
 }
 
-export const userPermissionSteps: IntegrationStep<IntegrationConfig>[] = [
+export const permissionSetSteps: IntegrationStep<IntegrationConfig>[] = [
   {
     id: Steps.PERMISSION_SETS,
     name: 'Fetch User Permission Details',

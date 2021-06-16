@@ -21,7 +21,7 @@ export function createUserRoleEntity(
         _key: createUserRoleEntityIdentifier(role.Id), // Must be at least 10 chars long
         _type: Entities.USER_ROLE._type,
         _class: Entities.USER_ROLE._class,
-        name: role.Name, //required property in J1 User
+        name: role.Name,
       },
     },
   });
