@@ -2,7 +2,6 @@ import {
   IntegrationStep,
   IntegrationStepExecutionContext,
   createDirectRelationship,
-  RelationshipClass,
 } from '@jupiterone/integration-sdk-core';
 
 import { createAPIClient } from '../../client';

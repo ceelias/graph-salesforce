@@ -1,25 +1,25 @@
-import { createUserRoleEntity } from './converter';
+import { createPermissionSetEntity } from './converter';
 import { StandardSchema } from 'jsforce';
 
 describe('#createUserRoleEntity', () => {
   test('should convert to entity', () => {
-    const role = {
-      Id: 'roleid1',
-      Name: 'Role Name',
-    } as StandardSchema['SObjects']['UserRole']['Fields'];
+    const permSet = {
+      Id: 'permSet1',
+      Name: 'Perm Set',
+    } as StandardSchema['SObjects']['PermissionSet']['Fields'];
 
-    const entity = createUserRoleEntity(role);
+    const entity = createPermissionSetEntity(permSet);
 
     expect(entity).toEqual(
       expect.objectContaining({
-        _key: 'salesforce-user-role:roleid1',
-        _type: 'salesforce_user_role',
-        _class: ['AccessRole'],
-        name: 'Role Name',
+        _key: 'salesforce-permission-set:permSet1',
+        _type: 'salesforce_permission_set',
+        _class: ['AccessPolicy'],
+        name: 'Perm Set',
         _rawData: [
           {
             name: 'default',
-            rawData: role,
+            rawData: permSet,
           },
         ],
       }),

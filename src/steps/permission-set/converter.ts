@@ -12,17 +12,17 @@ export function createPermissionEntityIdentifier(login: string): string {
 }
 
 export function createPermissionSetEntity(
-  permission: StandardSchema['SObjects']['PermissionSet']['Fields'],
+  permSet: StandardSchema['SObjects']['PermissionSet']['Fields'],
 ): Entity {
   return createIntegrationEntity({
     entityData: {
-      source: permission,
+      source: permSet,
       assign: {
-        _key: createPermissionEntityIdentifier(permission.Id), // Must be at least 10 chars long
+        _key: createPermissionEntityIdentifier(permSet.Id), // Must be at least 10 chars long
         _type: Entities.PERMISSION_SET._type,
         _class: Entities.PERMISSION_SET._class,
-        id: permission.Id,
-        name: permission.Name, //required property in J1 User
+        id: permSet.Id,
+        name: permSet.Name, //required property in J1 User
         // TODO: Include more attributes that are deemed valuable
       },
     },
