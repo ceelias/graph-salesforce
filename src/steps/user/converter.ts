@@ -1,6 +1,7 @@
 import {
   createIntegrationEntity,
   Entity,
+  parseTimePropertyValue,
 } from '@jupiterone/integration-sdk-core';
 
 import { Entities } from '../constants';
@@ -23,11 +24,30 @@ export function createUserEntity(
         _class: Entities.USER._class,
         username: user.Username, //required property in J1 User
         name: user.Name, //required property in J1 User
-        // TODO: currently the emails are failing to fit the format (some are missing .com)
-        // email: user.Email,
-        roleId: user.UserRoleId,
         shortLoginId: user.CommunityNickname,
-        // TODO: Include more attributes that are deemed valuable
+        id: user.Id,
+        createdOn: parseTimePropertyValue(user.CreatedDate),
+        createdBy: user.CreatedById,
+        updatedOn: parseTimePropertyValue(user.LastModifiedDate),
+        updatedBy: user.LastModifiedById,
+        userEmail: user.Email,
+        // Custom Properties
+        roleId: user.UserRoleId,
+        lastLoginDate: parseTimePropertyValue(user.LastLoginDate),
+        lastPasswordChangeDate: parseTimePropertyValue(
+          user.LastPasswordChangeDate,
+        ),
+        profileId: user.ProfileId,
+        // User Object Permissions
+        userPermissionsMarketingUser: user.UserPermissionsMarketingUser,
+        userPermissionsOfflineUser: user.UserPermissionsOfflineUser,
+        userPermissionsCallCenterAutoLogin:
+          user.UserPermissionsCallCenterAutoLogin,
+        userPermissionsSFContentUser: user.UserPermissionsSFContentUser,
+        userPermissionsKnowledgeUser: user.UserPermissionsKnowledgeUser,
+        userPermissionsInteractionUser: user.UserPermissionsInteractionUser,
+        userPermissionsSupportUser: user.UserPermissionsSupportUser,
+        userPermissionsAvantgoUser: user.UserPermissionsAvantgoUser,
       },
     },
   });

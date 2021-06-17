@@ -6,6 +6,11 @@ describe('#createUserRoleEntity', () => {
     const role = {
       Id: 'roleid1',
       Name: 'Role Name',
+      LastModifiedById: 'modified-id',
+      ParentRoleId: 'parent-id',
+      OpportunityAccessForAccountOwner: 'edit',
+      CaseAccessForAccountOwner: 'edit',
+      ContactAccessForAccountOwner: 'edit',
     } as StandardSchema['SObjects']['UserRole']['Fields'];
 
     const entity = createUserRoleEntity(role);
@@ -16,6 +21,12 @@ describe('#createUserRoleEntity', () => {
         _type: 'salesforce_user_role',
         _class: ['AccessRole'],
         name: 'Role Name',
+        id: 'roleid1',
+        updatedBy: 'modified-id',
+        parentRoleId: 'parent-id',
+        opportunityAccessForAccountOwner: 'edit',
+        caseAccessForAccountOwner: 'edit',
+        contactAccessForAccountOwner: 'edit',
         _rawData: [
           {
             name: 'default',
