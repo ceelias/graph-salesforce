@@ -9,10 +9,14 @@ export const Steps = {
   USER_ROLES: 'fetch-user-roles',
   PERMISSION_SETS: 'fetch-permission-sets',
   BUILD_USER_HAS_PERMISSION_SETS: 'build-user-has-permission-sets',
+  GROUPS: 'fetch-groups',
+  BUILD_GROUP_RELATIONSHIPS: 'build-group-relationships',
+  FETCH_USER_ROLE_TO_USER_ROLE_RELATIONSHIP:
+    'fetch-user-role-to-user-role-relationship',
 };
 
 export const Entities: Record<
-  'USER' | 'USER_ROLE' | 'PERMISSION_SET',
+  'USER' | 'USER_ROLE' | 'PERMISSION_SET' | 'GROUP',
   StepEntityMetadata
 > = {
   USER: {
@@ -30,10 +34,20 @@ export const Entities: Record<
     _type: 'salesforce_permission_set',
     _class: ['AccessPolicy'],
   },
+  GROUP: {
+    resourceName: 'GROUP',
+    _type: 'salesforce_group',
+    _class: ['Group'],
+  },
 };
 
 export const Relationships: Record<
-  'USER_HAS_ROLE' | 'USER_HAS_PERMISSION_SET',
+  | 'USER_HAS_ROLE'
+  | 'USER_HAS_PERMISSION_SET'
+  | 'GROUP_HAS_USER'
+  | 'GROUP_HAS_GROUP'
+  | 'GROUP_HAS_USER_ROLE'
+  | 'USER_ROLE_HAS_USER_ROLE',
   StepRelationshipMetadata
 > = {
   USER_HAS_ROLE: {
@@ -47,5 +61,29 @@ export const Relationships: Record<
     sourceType: Entities.USER._type,
     _class: RelationshipClass.HAS,
     targetType: Entities.PERMISSION_SET._type,
+  },
+  GROUP_HAS_USER: {
+    _type: 'salesforce_group_has_user',
+    sourceType: Entities.GROUP._type,
+    _class: RelationshipClass.HAS,
+    targetType: Entities.USER._type,
+  },
+  GROUP_HAS_GROUP: {
+    _type: 'salesforce_group_has_group',
+    sourceType: Entities.GROUP._type,
+    _class: RelationshipClass.HAS,
+    targetType: Entities.GROUP._type,
+  },
+  GROUP_HAS_USER_ROLE: {
+    _type: 'salesforce_group_has_user_role',
+    sourceType: Entities.GROUP._type,
+    _class: RelationshipClass.HAS,
+    targetType: Entities.USER_ROLE._type,
+  },
+  USER_ROLE_HAS_USER_ROLE: {
+    _type: 'salesforce_user_role_has_user_role',
+    sourceType: Entities.USER_ROLE._type,
+    _class: RelationshipClass.HAS,
+    targetType: Entities.USER_ROLE._type,
   },
 };
