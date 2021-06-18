@@ -128,6 +128,41 @@ export class APIClient {
       await iteratee(assignment);
     }
   }
+
+  /**
+   * Iterates each group resource in the provider.
+   *
+   * @param iteratee receives each resource to produce entities/relationships
+   */
+  public async iterateGroups(
+    iteratee: ResourceIteratee<StandardSchema['SObjects']['Group']['Fields']>,
+  ): Promise<void> {
+    const groups = await this.conn.sobject('Group').find().autoFetch(true);
+
+    for (const group of groups) {
+      await iteratee(group);
+    }
+  }
+
+  /**
+   * Iterates each group members resource in the provider.
+   *
+   * @param iteratee receives each resource to produce entities/relationships
+   */
+  public async iterateGroupMembers(
+    iteratee: ResourceIteratee<
+      StandardSchema['SObjects']['GroupMember']['Fields']
+    >,
+  ): Promise<void> {
+    const members = await this.conn
+      .sobject('GroupMember')
+      .find()
+      .autoFetch(true); //autofetch will automatically handle pagination
+
+    for (const member of members) {
+      await iteratee(member);
+    }
+  }
 }
 
 export function createAPIClient(config: IntegrationConfig): APIClient {

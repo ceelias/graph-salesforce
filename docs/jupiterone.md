@@ -98,6 +98,7 @@ The following entities are created:
 
 | Resources     | Entity `_type`              | Entity `_class` |
 | ------------- | --------------------------- | --------------- |
+| GROUP         | `salesforce_group`          | `Group`         |
 | PermissionSet | `salesforce_permission_set` | `AccessPolicy`  |
 | User          | `salesforce_user`           | `User`          |
 | UserRole      | `salesforce_user_role`      | `AccessRole`    |
@@ -106,10 +107,14 @@ The following entities are created:
 
 The following relationships are created/mapped:
 
-| Source Entity `_type` | Relationship `_class` | Target Entity `_type`       |
-| --------------------- | --------------------- | --------------------------- |
-| `salesforce_user`     | **HAS**               | `salesforce_permission_set` |
-| `salesforce_user`     | **HAS**               | `salesforce_user_role`      |
+| Source Entity `_type`  | Relationship `_class` | Target Entity `_type`       |
+| ---------------------- | --------------------- | --------------------------- |
+| `salesforce_group`     | **HAS**               | `salesforce_group`          |
+| `salesforce_group`     | **HAS**               | `salesforce_user`           |
+| `salesforce_group`     | **HAS**               | `salesforce_user_role`      |
+| `salesforce_user`      | **HAS**               | `salesforce_permission_set` |
+| `salesforce_user`      | **HAS**               | `salesforce_user_role`      |
+| `salesforce_user_role` | **HAS**               | `salesforce_user_role`      |
 
 <!--
 ********************************************************************************
