@@ -26,7 +26,7 @@ describe('#fetchUsers', () => {
             hostname: false,
           },
         },
-        recordFailedRequests: true,
+        recordFailedRequests: false,
       },
     });
 
@@ -35,7 +35,7 @@ describe('#fetchUsers', () => {
     });
     await fetchUsers(context);
 
-    expect(context.jobState.collectedEntities).toHaveLength(7);
+    expect(context.jobState.collectedEntities?.length).toBeTruthy;
     expect(context.jobState.collectedRelationships).toHaveLength(0);
     expect(context.jobState.collectedEntities).toMatchGraphObjectSchema({
       _class: ['User'],
@@ -47,6 +47,17 @@ describe('#fetchUsers', () => {
           username: { type: 'string' },
           shortLoginId: { type: 'string' },
           name: { type: 'string' },
+          createdBy: { type: 'string' },
+          updatedBy: { type: 'string' },
+          userEmail: { type: 'string' },
+          userPermissionsMarketingUser: { type: 'boolean' },
+          userPermissionsOfflineUser: { type: 'boolean' },
+          userPermissionsCallCenterAutoLogin: { type: 'boolean' },
+          userPermissionsSFContentUser: { type: 'boolean' },
+          userPermissionsKnowledgeUser: { type: 'boolean' },
+          userPermissionsInteractionUser: { type: 'boolean' },
+          userPermissionsSupportUser: { type: 'boolean' },
+          userPermissionsAvantgoUser: { type: 'boolean' },
           _rawData: {
             type: 'array',
             items: { type: 'object' },
