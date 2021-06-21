@@ -33,15 +33,12 @@ export class APIClient {
     this.conn = new Connection<StandardSchema>({
       oauth2: oauth2,
       instanceUrl: this.config.instanceUrl,
-      accessToken: this.config.accessToken,
       refreshToken: this.config.refreshToken,
     });
   }
 
   public async verifyAuthentication(): Promise<void> {
     try {
-      // TODO: Add a wrapper around the authorize call to get token on initial integration:
-      // await this.conn.authorize(code);
       await this.conn.sobject('User').describe();
     } catch (err) {
       // There is a serious issue authenticating with API
