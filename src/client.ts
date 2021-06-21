@@ -165,7 +165,7 @@ export class APIClient {
   }
 
   /**
-   * Iterates each group resource in the provider.
+   * Iterates each profile resource in the provider.
    *
    * @param iteratee receives each resource to produce entities/relationships
    */
