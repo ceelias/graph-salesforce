@@ -21,10 +21,6 @@ import { createAPIClient } from './client';
  * `instance.config` in a UI.
  */
 export const instanceConfigFields: IntegrationInstanceConfigFieldMap = {
-  accessToken: {
-    type: 'string',
-    mask: true,
-  },
   refreshToken: {
     type: 'string',
     mask: true,
@@ -46,11 +42,6 @@ export const instanceConfigFields: IntegrationInstanceConfigFieldMap = {
  * same properties defined by `instanceConfigFields`.
  */
 export interface IntegrationConfig extends IntegrationInstanceConfig {
-  /**
-   * The provider API client access token used to authenticate requests.
-   */
-  accessToken: string;
-
   /**
    * The provider API instance URL
    */
@@ -78,15 +69,13 @@ export async function validateInvocation(
   const { config } = context.instance;
 
   if (
-    !config.accessToken ||
     !config.instanceUrl ||
     !config.refreshToken ||
     !config.clientId ||
     !config.clientSecret
   ) {
-    //TODO handle this better for actual deployment
     throw new IntegrationValidationError(
-      'Config requires all of {accessToken, instanceUrl}',
+      'Config requires all of {instanceUrl, refreshToken, clientId, clientSecret}',
     );
   }
 
