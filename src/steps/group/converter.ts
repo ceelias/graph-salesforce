@@ -7,9 +7,9 @@ import {
 import { Entities } from '../constants';
 import { StandardSchema } from 'jsforce';
 
-const USER_LOGIN_PREFIX = 'salesforce-group';
-export function createGroupEntityIdentifier(login: string): string {
-  return `${USER_LOGIN_PREFIX}:${login}`;
+const GROUP_PREFIX = 'salesforce-group';
+export function createGroupEntityIdentifier(id: string): string {
+  return `${GROUP_PREFIX}:${id}`;
 }
 
 export function createGroupEntity(

@@ -99,6 +99,7 @@ The following entities are created:
 | Resources     | Entity `_type`              | Entity `_class` |
 | ------------- | --------------------------- | --------------- |
 | GROUP         | `salesforce_group`          | `Group`         |
+| PROFILE       | `salesforce_profile`        | `Account`       |
 | PermissionSet | `salesforce_permission_set` | `AccessPolicy`  |
 | User          | `salesforce_user`           | `User`          |
 | UserRole      | `salesforce_user_role`      | `AccessRole`    |
@@ -112,7 +113,9 @@ The following relationships are created/mapped:
 | `salesforce_group`     | **HAS**               | `salesforce_group`          |
 | `salesforce_group`     | **HAS**               | `salesforce_user`           |
 | `salesforce_group`     | **HAS**               | `salesforce_user_role`      |
+| `salesforce_profile`   | **HAS**               | `salesforce_permission_set` |
 | `salesforce_user`      | **HAS**               | `salesforce_permission_set` |
+| `salesforce_user`      | **HAS**               | `salesforce_profile`        |
 | `salesforce_user`      | **HAS**               | `salesforce_user_role`      |
 | `salesforce_user_role` | **HAS**               | `salesforce_user_role`      |
 

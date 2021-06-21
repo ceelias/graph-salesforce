@@ -12,6 +12,7 @@ import {
   createPermissionSetEntityIdentifier,
 } from './converter';
 import { createUserEntityIdentifier } from '../user/converter';
+import { createProfileEntityIdentifier } from '../profile/converter';
 
 export async function fetchPermissionSets({
   instance,
@@ -20,7 +21,29 @@ export async function fetchPermissionSets({
   const apiClient = createAPIClient(instance.config);
 
   await apiClient.iteratePermissionSets(async (permission) => {
-    await jobState.addEntity(createPermissionSetEntity(permission));
+    const permSetEntity = await jobState.addEntity(
+      createPermissionSetEntity(permission),
+    );
+
+    if (permission.IsOwnedByProfile && permission.ProfileId) {
+      // If this permission set is owned by a profile, make relationship to profile
+      const profileEntity = await jobState.findEntity(
+        createProfileEntityIdentifier(permission.ProfileId),
+      );
+
+      if (profileEntity) {
+        await jobState.addRelationship(
+          createDirectRelationship({
+            _class: Relationships.PROFILE_HAS_PERMISSION_SET._class,
+            from: profileEntity,
+            to: permSetEntity,
+            properties: {
+              _type: Relationships.PROFILE_HAS_PERMISSION_SET._type,
+            },
+          }),
+        );
+      }
+    }
   });
 }
 
@@ -60,8 +83,11 @@ export const permissionSetSteps: IntegrationStep<IntegrationConfig>[] = [
     id: Steps.PERMISSION_SETS,
     name: 'Fetch User Permission Details',
     entities: [Entities.PERMISSION_SET],
-    relationships: [Relationships.USER_HAS_PERMISSION_SET],
-    dependsOn: [],
+    relationships: [
+      Relationships.USER_HAS_PERMISSION_SET,
+      Relationships.PROFILE_HAS_PERMISSION_SET,
+    ],
+    dependsOn: [Steps.PROFILES],
     executionHandler: fetchPermissionSets,
   },
   {
