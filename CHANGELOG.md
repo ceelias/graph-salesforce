@@ -12,6 +12,31 @@ and this project adheres to
 
 ### Added
 
+- Added support for ingesting the following **new** resources:
+
+  | Service       | Resource / Entity           |
+  | ------------- | --------------------------- |
+  | Group         | `salesforce_group`          |
+  | PermissionSet | `salesforce_permission_set` |
+  | Profile       | `salesforce_profile`        |
+  | User          | `salesforce_user`           |
+  | UserRole      | `salesforce_user_role`      |
+
+* Added support for ingesting the following **new** relationships:
+
+  | Source                 | \_class | Target                      |
+  | ---------------------- | ------- | --------------------------- |
+  | `salesforce_group`     | `HAS`   | `salesforce_group`          |
+  | `salesforce_group`     | `HAS`   | `salesforce_user`           |
+  | `salesforce_group`     | `HAS`   | `salesforce_user_role`      |
+  | `salesforce_profile`   | `HAS`   | `salesforce_permission_set` |
+  | `salesforce_user`      | `HAS`   | `salesforce_permission_set` |
+  | `salesforce_user`      | `HAS`   | `salesforce_profile`        |
+  | `salesforce_user`      | `HAS`   | `salesforce_user_role`      |
+  | `salesforce_user_role` | `HAS`   | `salesforce_user_role`      |
+
+### Added
+
 - User Group Entity
 - User Entity
 - Profile Entity
