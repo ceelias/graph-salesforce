@@ -2,6 +2,7 @@ import {
   IntegrationStep,
   IntegrationStepExecutionContext,
   createDirectRelationship,
+  getRawData,
 } from '@jupiterone/integration-sdk-core';
 
 import { createAPIClient } from '../../client';
@@ -13,6 +14,8 @@ import {
 } from './converter';
 import { createUserEntityIdentifier } from '../user/converter';
 import { createProfileEntityIdentifier } from '../profile/converter';
+
+import { StandardSchema } from 'jsforce';
 
 export async function fetchPermissionSets({
   instance,
@@ -63,16 +66,24 @@ export async function buildUserPermissionSetRelationships({
       const permEntity = await jobState.findEntity(permEntityId);
 
       if (userEntity && permEntity) {
-        await jobState.addRelationship(
-          createDirectRelationship({
-            _class: Relationships.USER_HAS_PERMISSION_SET._class,
-            from: userEntity,
-            to: permEntity,
-            properties: {
-              _type: Relationships.USER_HAS_PERMISSION_SET._type,
-            },
-          }),
-        );
+        const perm = getRawData<
+          StandardSchema['SObjects']['PermissionSet']['Fields']
+        >(permEntity);
+
+        if (perm && !perm.IsOwnedByProfile) {
+          // Check to see if the user has this permission set from its profile
+          // If so, don't add direct relationship
+          await jobState.addRelationship(
+            createDirectRelationship({
+              _class: Relationships.USER_HAS_PERMISSION_SET._class,
+              from: userEntity,
+              to: permEntity,
+              properties: {
+                _type: Relationships.USER_HAS_PERMISSION_SET._type,
+              },
+            }),
+          );
+        }
       }
     }
   });

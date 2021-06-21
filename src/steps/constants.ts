@@ -41,7 +41,7 @@ export const Entities: Record<
     _class: ['Group'],
   },
   PROFILE: {
-    resourceName: 'PROFILE',
+    resourceName: 'Profile',
     _type: 'salesforce_profile',
     _class: ['Account'],
   },

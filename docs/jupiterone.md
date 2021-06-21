@@ -99,8 +99,8 @@ The following entities are created:
 | Resources     | Entity `_type`              | Entity `_class` |
 | ------------- | --------------------------- | --------------- |
 | GROUP         | `salesforce_group`          | `Group`         |
-| PROFILE       | `salesforce_profile`        | `Account`       |
 | PermissionSet | `salesforce_permission_set` | `AccessPolicy`  |
+| Profile       | `salesforce_profile`        | `Account`       |
 | User          | `salesforce_user`           | `User`          |
 | UserRole      | `salesforce_user_role`      | `AccessRole`    |
 
