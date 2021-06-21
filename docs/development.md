@@ -17,11 +17,11 @@ is required to run and test this integration.
    [Connected App](https://help.salesforce.com/articleView?id=sf.connected_app_create.htm&type=5)
 
 - Ensure the following configurations are enabled:
-- - Enable OAuth Settings (Checked)
-- - Callback URL: 'https://login.salesforce.com/services/oauth2/success'
-- - Policy : "Access and manage your data (api)" and "Perform requests on your
+  - Enable OAuth Settings (Checked)
+  - Callback URL: 'https://login.salesforce.com/services/oauth2/success'
+  - Policy : "Access and manage your data (api)" and "Perform requests on your
     behalf at any time (refresh_token, offline_access)"
-- - Save consumer key and consumer secret
+  - Save consumer key and consumer secret
 
 3. Get **Auth Code**: Using postman you can hit the API(POST) with:
 

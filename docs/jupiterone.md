@@ -36,11 +36,11 @@ If you need help with this integration, please contact
    [Connected App](https://help.salesforce.com/articleView?id=sf.connected_app_create.htm&type=5)
 
 - Ensure the following configurations are enabled:
-- - Enable OAuth Settings (Checked)
-- - Callback URL: 'https://login.salesforce.com/services/oauth2/success'
-- - Policy : "Access and manage your data (api)" and "Perform requests on your
+  - Enable OAuth Settings (Checked)
+  - Callback URL: 'https://login.salesforce.com/services/oauth2/success'
+  - Policy : "Access and manage your data (api)" and "Perform requests on your
     behalf at any time (refresh_token, offline_access)"
-- - Save consumer key and consumer secret
+  - Save consumer key and consumer secret
 
 ### In JupiterOne
 
