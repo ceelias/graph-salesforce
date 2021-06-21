@@ -163,6 +163,21 @@ export class APIClient {
       await iteratee(member);
     }
   }
+
+  /**
+   * Iterates each profile resource in the provider.
+   *
+   * @param iteratee receives each resource to produce entities/relationships
+   */
+  public async iterateProfiles(
+    iteratee: ResourceIteratee<StandardSchema['SObjects']['Profile']['Fields']>,
+  ): Promise<void> {
+    const profiles = await this.conn.sobject('Profile').find().autoFetch(true);
+
+    for (const profile of profiles) {
+      await iteratee(profile);
+    }
+  }
 }
 
 export function createAPIClient(config: IntegrationConfig): APIClient {

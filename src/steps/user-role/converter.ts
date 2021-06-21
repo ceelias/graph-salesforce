@@ -8,8 +8,8 @@ import { Entities } from '../constants';
 import { StandardSchema } from 'jsforce';
 
 const USER_ROLE_PREFIX = 'salesforce-user-role';
-export function createUserRoleEntityIdentifier(login: string): string {
-  return `${USER_ROLE_PREFIX}:${login}`;
+export function createUserRoleEntityIdentifier(id: string): string {
+  return `${USER_ROLE_PREFIX}:${id}`;
 }
 
 export function createUserRoleEntity(

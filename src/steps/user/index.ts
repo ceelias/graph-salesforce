@@ -9,6 +9,7 @@ import { IntegrationConfig } from '../../config';
 import { Entities, Steps, Relationships } from '../constants';
 import { createUserEntity } from './converter';
 import { createUserRoleEntityIdentifier } from '../user-role/converter';
+import { createProfileEntityIdentifier } from '../profile/converter';
 
 export async function fetchUsers({
   instance,
@@ -37,6 +38,25 @@ export async function fetchUsers({
         );
       }
     }
+
+    if (user.ProfileId) {
+      //Check to see if this user has a profile and if so make relationship
+      const profileEntityId = createProfileEntityIdentifier(user.ProfileId);
+      const profileEntity = await jobState.findEntity(profileEntityId);
+
+      if (profileEntity) {
+        await jobState.addRelationship(
+          createDirectRelationship({
+            _class: Relationships.USER_HAS_PROFILE._class,
+            from: userEntity,
+            to: profileEntity,
+            properties: {
+              _type: Relationships.USER_HAS_PROFILE._type,
+            },
+          }),
+        );
+      }
+    }
   });
 }
 
@@ -45,8 +65,11 @@ export const userSteps: IntegrationStep<IntegrationConfig>[] = [
     id: Steps.USERS,
     name: 'Fetch User Details',
     entities: [Entities.USER],
-    relationships: [Relationships.USER_HAS_ROLE, Relationships.GROUP_HAS_USER],
-    dependsOn: [Steps.USER_ROLES],
+    relationships: [
+      Relationships.USER_HAS_ROLE,
+      Relationships.USER_HAS_PROFILE,
+    ],
+    dependsOn: [Steps.USER_ROLES, Steps.PROFILES],
     executionHandler: fetchUsers,
   },
 ];

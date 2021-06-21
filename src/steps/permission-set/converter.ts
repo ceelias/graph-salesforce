@@ -7,9 +7,9 @@ import {
 import { Entities } from '../constants';
 import { StandardSchema } from 'jsforce';
 
-const USER_LOGIN_PREFIX = 'salesforce-permission-set';
-export function createPermissionSetEntityIdentifier(login: string): string {
-  return `${USER_LOGIN_PREFIX}:${login}`;
+const PERMISSION_PREFIX = 'salesforce-permission-set';
+export function createPermissionSetEntityIdentifier(id: string): string {
+  return `${PERMISSION_PREFIX}:${id}`;
 }
 
 export function createPermissionSetEntity(
