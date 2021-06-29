@@ -20,7 +20,6 @@
 
 - Salesforce supports the OAuth2 Web Server flow, with a connected app
   configured to allow for this flow.
-- JupiterOne requires a Consumer Key and Consumer Secret
 - You must have permission in JupiterOne to install new integrations.
 
 ## Support
@@ -32,15 +31,14 @@ If you need help with this integration, please contact
 
 ### In Salesforce
 
-1. Add a
-   [Connected App](https://help.salesforce.com/articleView?id=sf.connected_app_create.htm&type=5)
+1. First navigate to the JupiterOne Salesforce integration configuration page
+   (see detailed steps in the **In JupiterOne** section below)
 
-- Ensure the following configurations are enabled:
-  - Enable OAuth Settings (Checked)
-  - Callback URL: 'https://login.salesforce.com/services/oauth2/success'
-  - Policy : "Access and manage your data (api)" and "Perform requests on your
-    behalf at any time (refresh_token, offline_access)"
-  - Save consumer key and consumer secret
+2. Once the relevant form information has been filled out, submitting the form
+   will redirect the user to Salesforce to authorize the requested scopes.
+
+3. Review the request, click "Allow", and then you will be redirected back to
+   JupiterOne.
 
 ### In JupiterOne
 
@@ -55,8 +53,6 @@ If you need help with this integration, please contact
   the integration instance.
 - Select a **Polling Interval** that you feel is sufficient for your monitoring
   needs. You may leave this as `DISABLED` and manually execute the integration.
-- Enter the **Consumer Key** and **Consumer Secret** for the Salesforce
-  connected App
 
 4. Click **Create Configuration** once all values are provided.
 
