@@ -36,7 +36,7 @@ export const Entities: Record<
     _class: ['AccessPolicy'],
   },
   GROUP: {
-    resourceName: 'GROUP',
+    resourceName: 'Group',
     _type: 'salesforce_group',
     _class: ['Group'],
   },
@@ -61,13 +61,13 @@ export const Relationships: Record<
   USER_HAS_ROLE: {
     _type: 'salesforce_user_has_user_role',
     sourceType: Entities.USER._type,
-    _class: RelationshipClass.HAS,
+    _class: RelationshipClass.ASSIGNED,
     targetType: Entities.USER_ROLE._type,
   },
   USER_HAS_PERMISSION_SET: {
     _type: 'salesforce_user_has_permission_set',
     sourceType: Entities.USER._type,
-    _class: RelationshipClass.HAS,
+    _class: RelationshipClass.ASSIGNED,
     targetType: Entities.PERMISSION_SET._type,
   },
   GROUP_HAS_USER: {

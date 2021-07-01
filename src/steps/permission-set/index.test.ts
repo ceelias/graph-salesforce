@@ -115,7 +115,7 @@ describe('#buildUserPermissionSetRelationships', () => {
     ).toMatchDirectRelationshipSchema({
       schema: {
         properties: {
-          _class: { const: RelationshipClass.HAS },
+          _class: { const: RelationshipClass.ASSIGNED },
           _type: { const: Relationships.USER_HAS_PERMISSION_SET._type },
         },
       },
