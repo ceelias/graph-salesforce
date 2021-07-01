@@ -75,11 +75,11 @@ export async function buildUserPermissionSetRelationships({
           // If so, don't add direct relationship
           await jobState.addRelationship(
             createDirectRelationship({
-              _class: Relationships.USER_HAS_PERMISSION_SET._class,
+              _class: Relationships.USER_ASSIGNED_PERMISSION_SET._class,
               from: userEntity,
               to: permEntity,
               properties: {
-                _type: Relationships.USER_HAS_PERMISSION_SET._type,
+                _type: Relationships.USER_ASSIGNED_PERMISSION_SET._type,
               },
             }),
           );
@@ -95,18 +95,18 @@ export const permissionSetSteps: IntegrationStep<IntegrationConfig>[] = [
     name: 'Fetch User Permission Details',
     entities: [Entities.PERMISSION_SET],
     relationships: [
-      Relationships.USER_HAS_PERMISSION_SET,
+      Relationships.USER_ASSIGNED_PERMISSION_SET,
       Relationships.PROFILE_HAS_PERMISSION_SET,
     ],
     dependsOn: [Steps.PROFILES],
     executionHandler: fetchPermissionSets,
   },
   {
-    id: Steps.BUILD_USER_HAS_PERMISSION_SETS,
+    id: Steps.BUILD_USER_ASSIGNED_PERMISSION_SETS,
     name: 'Build user permission set relationship',
     entities: [],
     executionHandler: buildUserPermissionSetRelationships,
-    relationships: [Relationships.USER_HAS_PERMISSION_SET],
+    relationships: [Relationships.USER_ASSIGNED_PERMISSION_SET],
     dependsOn: [Steps.USERS, Steps.PERMISSION_SETS],
   },
 ];

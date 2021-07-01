@@ -110,13 +110,13 @@ describe('#buildUserPermissionSetRelationships', () => {
     expect(context.jobState.collectedRelationships?.length).toBeTruthy;
     expect(
       context.jobState.collectedRelationships.filter(
-        (r) => r._type === Relationships.USER_HAS_PERMISSION_SET._type,
+        (r) => r._type === Relationships.USER_ASSIGNED_PERMISSION_SET._type,
       ),
     ).toMatchDirectRelationshipSchema({
       schema: {
         properties: {
           _class: { const: RelationshipClass.ASSIGNED },
-          _type: { const: Relationships.USER_HAS_PERMISSION_SET._type },
+          _type: { const: Relationships.USER_ASSIGNED_PERMISSION_SET._type },
         },
       },
     });

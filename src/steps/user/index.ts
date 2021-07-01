@@ -28,11 +28,11 @@ export async function fetchUsers({
       if (userRoleEntity) {
         await jobState.addRelationship(
           createDirectRelationship({
-            _class: Relationships.USER_HAS_ROLE._class,
+            _class: Relationships.USER_ASSIGNED_ROLE._class,
             from: userEntity,
             to: userRoleEntity,
             properties: {
-              _type: Relationships.USER_HAS_ROLE._type,
+              _type: Relationships.USER_ASSIGNED_ROLE._type,
             },
           }),
         );
@@ -66,7 +66,7 @@ export const userSteps: IntegrationStep<IntegrationConfig>[] = [
     name: 'Fetch User Details',
     entities: [Entities.USER],
     relationships: [
-      Relationships.USER_HAS_ROLE,
+      Relationships.USER_ASSIGNED_ROLE,
       Relationships.USER_HAS_PROFILE,
     ],
     dependsOn: [Steps.USER_ROLES, Steps.PROFILES],

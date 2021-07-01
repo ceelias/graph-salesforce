@@ -8,7 +8,7 @@ export const Steps = {
   USERS: 'fetch-users',
   USER_ROLES: 'fetch-user-roles',
   PERMISSION_SETS: 'fetch-permission-sets',
-  BUILD_USER_HAS_PERMISSION_SETS: 'build-user-has-permission-sets',
+  BUILD_USER_ASSIGNED_PERMISSION_SETS: 'build-user-assigned-permission-sets',
   GROUPS: 'fetch-groups',
   BUILD_GROUP_RELATIONSHIPS: 'build-group-relationships',
   FETCH_USER_ROLE_TO_USER_ROLE_RELATIONSHIP:
@@ -48,8 +48,8 @@ export const Entities: Record<
 };
 
 export const Relationships: Record<
-  | 'USER_HAS_ROLE'
-  | 'USER_HAS_PERMISSION_SET'
+  | 'USER_ASSIGNED_ROLE'
+  | 'USER_ASSIGNED_PERMISSION_SET'
   | 'GROUP_HAS_USER'
   | 'GROUP_HAS_GROUP'
   | 'GROUP_HAS_USER_ROLE'
@@ -58,13 +58,13 @@ export const Relationships: Record<
   | 'PROFILE_HAS_PERMISSION_SET',
   StepRelationshipMetadata
 > = {
-  USER_HAS_ROLE: {
+  USER_ASSIGNED_ROLE: {
     _type: 'salesforce_user_has_user_role',
     sourceType: Entities.USER._type,
     _class: RelationshipClass.ASSIGNED,
     targetType: Entities.USER_ROLE._type,
   },
-  USER_HAS_PERMISSION_SET: {
+  USER_ASSIGNED_PERMISSION_SET: {
     _type: 'salesforce_user_has_permission_set',
     sourceType: Entities.USER._type,
     _class: RelationshipClass.ASSIGNED,
