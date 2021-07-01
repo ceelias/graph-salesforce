@@ -59,13 +59,13 @@ export const Relationships: Record<
   StepRelationshipMetadata
 > = {
   USER_ASSIGNED_ROLE: {
-    _type: 'salesforce_user_has_user_role',
+    _type: 'salesforce_user_assigned_user_role',
     sourceType: Entities.USER._type,
     _class: RelationshipClass.ASSIGNED,
     targetType: Entities.USER_ROLE._type,
   },
   USER_ASSIGNED_PERMISSION_SET: {
-    _type: 'salesforce_user_has_permission_set',
+    _type: 'salesforce_user_assigned_permission_set',
     sourceType: Entities.USER._type,
     _class: RelationshipClass.ASSIGNED,
     targetType: Entities.PERMISSION_SET._type,

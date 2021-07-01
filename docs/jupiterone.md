@@ -100,8 +100,8 @@ The following relationships are created/mapped:
 | `salesforce_group`     | **HAS**               | `salesforce_user_role`      |
 | `salesforce_profile`   | **HAS**               | `salesforce_permission_set` |
 | `salesforce_user`      | **ASSIGNED**          | `salesforce_permission_set` |
-| `salesforce_user`      | **HAS**               | `salesforce_profile`        |
 | `salesforce_user`      | **ASSIGNED**          | `salesforce_user_role`      |
+| `salesforce_user`      | **HAS**               | `salesforce_profile`        |
 | `salesforce_user_role` | **HAS**               | `salesforce_user_role`      |
 
 <!--
