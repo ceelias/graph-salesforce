@@ -94,13 +94,13 @@ describe('#fetchGroups', () => {
     // Group to group relationship
     expect(
       context.jobState.collectedRelationships.filter(
-        (r) => r._type === Relationships.GROUP_HAS_USER_ROLE._type,
+        (r) => r._type === Relationships.GROUP_ASSIGNED_USER_ROLE._type,
       ),
     ).toMatchDirectRelationshipSchema({
       schema: {
         properties: {
-          _class: { const: RelationshipClass.HAS },
-          _type: { const: Relationships.GROUP_HAS_USER_ROLE._type },
+          _class: { const: RelationshipClass.ASSIGNED },
+          _type: { const: Relationships.GROUP_ASSIGNED_USER_ROLE._type },
         },
       },
     });

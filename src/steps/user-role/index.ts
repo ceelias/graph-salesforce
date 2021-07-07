@@ -45,11 +45,11 @@ export async function fetchUserRoleToUserRoleRelationship({
         if (parentRoleEntity) {
           await jobState.addRelationship(
             createDirectRelationship({
-              _class: Relationships.USER_ROLE_HAS_USER_ROLE._class,
+              _class: Relationships.USER_ROLE_CONTAINS_USER_ROLE._class,
               from: parentRoleEntity,
               to: roleEntity,
               properties: {
-                _type: Relationships.USER_ROLE_HAS_USER_ROLE._type,
+                _type: Relationships.USER_ROLE_CONTAINS_USER_ROLE._type,
               },
             }),
           );
@@ -64,7 +64,7 @@ export const userRoleSteps: IntegrationStep<IntegrationConfig>[] = [
     id: Steps.USER_ROLES,
     name: 'Fetch User Role Details',
     entities: [Entities.USER_ROLE],
-    relationships: [Relationships.USER_ROLE_HAS_USER_ROLE],
+    relationships: [Relationships.USER_ROLE_CONTAINS_USER_ROLE],
     dependsOn: [],
     executionHandler: fetchUserRoles,
   },
@@ -73,7 +73,7 @@ export const userRoleSteps: IntegrationStep<IntegrationConfig>[] = [
     name: 'Build user role to user role relationship',
     entities: [],
     executionHandler: fetchUserRoleToUserRoleRelationship,
-    relationships: [Relationships.USER_ROLE_HAS_USER_ROLE],
+    relationships: [Relationships.USER_ROLE_CONTAINS_USER_ROLE],
     dependsOn: [Steps.USER_ROLES],
   },
 ];
