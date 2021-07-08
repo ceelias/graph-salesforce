@@ -8,6 +8,18 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 0.1.4 2021-07-08
+
+### Changed
+
+- Updated user to permission set and user to user role relationships from has to
+  assigned:
+
+  | Source                 | \_class    | Target                 |
+  | ---------------------- | ---------- | ---------------------- |
+  | `salesforce_group`     | `ASSIGNED` | `salesforce_user_role` |
+  | `salesforce_user_role` | `CONTAINS` | `salesforce_user_role` |
+
 ## 0.1.3 2021-07-01
 
 ### Changed
