@@ -29,11 +29,11 @@ export async function fetchGroups({
         if (roleEntity && groupEntity) {
           await jobState.addRelationship(
             createDirectRelationship({
-              _class: Relationships.GROUP_HAS_USER_ROLE._class,
+              _class: Relationships.GROUP_ASSIGNED_USER_ROLE._class,
               from: groupEntity,
               to: roleEntity,
               properties: {
-                _type: Relationships.GROUP_HAS_USER_ROLE._type,
+                _type: Relationships.GROUP_ASSIGNED_USER_ROLE._type,
               },
             }),
           );
@@ -99,7 +99,7 @@ export const groupSteps: IntegrationStep<IntegrationConfig>[] = [
     relationships: [
       Relationships.GROUP_HAS_USER,
       Relationships.GROUP_HAS_GROUP,
-      Relationships.GROUP_HAS_USER_ROLE,
+      Relationships.GROUP_ASSIGNED_USER_ROLE,
     ],
     dependsOn: [Steps.USER_ROLES],
     executionHandler: fetchGroups,

@@ -52,8 +52,8 @@ export const Relationships: Record<
   | 'USER_ASSIGNED_PERMISSION_SET'
   | 'GROUP_HAS_USER'
   | 'GROUP_HAS_GROUP'
-  | 'GROUP_HAS_USER_ROLE'
-  | 'USER_ROLE_HAS_USER_ROLE'
+  | 'GROUP_ASSIGNED_USER_ROLE'
+  | 'USER_ROLE_CONTAINS_USER_ROLE'
   | 'USER_HAS_PROFILE'
   | 'PROFILE_HAS_PERMISSION_SET',
   StepRelationshipMetadata
@@ -82,16 +82,16 @@ export const Relationships: Record<
     _class: RelationshipClass.HAS,
     targetType: Entities.GROUP._type,
   },
-  GROUP_HAS_USER_ROLE: {
-    _type: 'salesforce_group_has_user_role',
+  GROUP_ASSIGNED_USER_ROLE: {
+    _type: 'salesforce_group_assigned_user_role',
     sourceType: Entities.GROUP._type,
-    _class: RelationshipClass.HAS,
+    _class: RelationshipClass.ASSIGNED,
     targetType: Entities.USER_ROLE._type,
   },
-  USER_ROLE_HAS_USER_ROLE: {
-    _type: 'salesforce_user_role_has_user_role',
+  USER_ROLE_CONTAINS_USER_ROLE: {
+    _type: 'salesforce_user_role_contains_user_role',
     sourceType: Entities.USER_ROLE._type,
-    _class: RelationshipClass.HAS,
+    _class: RelationshipClass.CONTAINS,
     targetType: Entities.USER_ROLE._type,
   },
   USER_HAS_PROFILE: {
