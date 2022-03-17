@@ -50,7 +50,6 @@ describe('#fetchUsers', () => {
           createdBy: { type: 'string' },
           updatedBy: { type: 'string' },
           userType: { type: 'string' },
-          email: { type: 'string' },
           userPermissionsMarketingUser: { type: 'boolean' },
           userPermissionsOfflineUser: { type: 'boolean' },
           userPermissionsCallCenterAutoLogin: { type: 'boolean' },
