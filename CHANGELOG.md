@@ -16,7 +16,7 @@ and this project adheres to
 
   | Entity            | Properties |
   | ----------------- | ---------- |
-  | `salesforce_user` | `active` |
+  | `salesforce_user` | `active`   |
 
 ## 1.0.0 - 2022-03-17
 
