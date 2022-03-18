@@ -26,6 +26,7 @@ export function createUserEntity(
         name: user.Name, //required property in J1 User
         shortLoginId: user.CommunityNickname,
         id: user.Id,
+        active: user.IsActive,
         createdOn: parseTimePropertyValue(user.CreatedDate),
         createdBy: user.CreatedById,
         updatedOn: parseTimePropertyValue(user.LastModifiedDate),

@@ -8,6 +8,16 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 1.1.0 - 2022-03-18
+
+### Added
+
+- New properties added to entities:
+
+  | Entity            | Properties |
+  | ----------------- | ---------- |
+  | `salesforce_user` | `active` |
+
 ## 1.0.0 - 2022-03-17
 
 ### Added
