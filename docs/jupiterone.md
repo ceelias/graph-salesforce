@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Salesforce
 
 ## Salesforce + JupiterOne Integration Benefits
 
@@ -41,7 +41,7 @@ If you need help with this integration, please contact
 
 ### In JupiterOne
 
-1. From the JupiterOne SalesForce integration configuration page **Gear Icon**, select **Integrations**.
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
 2. Scroll to the **Salesforce** integration tile and click it.
 3. Click the **Add Configuration** button and configure the following settings:
 
