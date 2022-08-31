@@ -77,7 +77,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - id: publish-image
-        uses: actions/publish-integration-image-action@v1-beta
+        uses: jupiterone/publish-integration-image-action@v1-beta
         with:
           package-name: 'jupiterone/graph-salesforce'
           docker-username: ${{ secrets.DOCKERHUB_USERNAME }}
