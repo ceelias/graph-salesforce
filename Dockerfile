@@ -13,5 +13,6 @@ COPY scripts/ ${JUPITERONE_INTEGRATION_DIR}/scripts
 
 WORKDIR  ${JUPITERONE_INTEGRATION_DIR}
 RUN yarn install
+RUN chmod +x ./scripts/run.sh
 
 CMD ["yarn", "execute"]
